@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../Firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import logo from './logo.webp'; // Import the logo image here
+import logo from './logo.png'; // Import the logo image here
 
 const MyNavbar = () => {
   const [isNavbarExpanded, setIsNavbarExpanded] = useState(false);
@@ -49,7 +49,7 @@ const MyNavbar = () => {
       <header id="navbar">
         <nav className="navbar-container container">
           <a href="/home" className="home-link">
-            <img src={logo} alt="MicroVentures Logo" className="navbar-logo" /> {/* Add the logo here */}
+            <img src={logo} alt="MicroVentures Logo" className="navbar-logo" />
             MicroVentures
           </a>
           <button
@@ -62,7 +62,7 @@ const MyNavbar = () => {
           >
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <span className="icon-bar"></span>
           </button>
           <div
             id="navbar-menu"

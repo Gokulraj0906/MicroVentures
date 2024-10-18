@@ -39,7 +39,7 @@ function LoanApprovalPage() {
     <>
       <MyNavbar />
       <MDBContainer fluid className="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <MDBCard className="text-black m-5" style={{ borderRadius: '25px', maxWidth: '1000px', width: '100%' }}>
+        <MDBCard className="text-black m-3 p-2 p-md-4" style={{ borderRadius: '25px', maxWidth: '1000px', width: '100%' }}>
           <MDBCardBody>
             <h1 className="text-center mb-4">Loan Applications</h1>
             {error && <p className="text-danger">{error}</p>}
@@ -61,14 +61,14 @@ function LoanApprovalPage() {
                 <MDBTableBody>
                   {applications.map((app) => (
                     <tr key={app.id}>
-                      <td>{app.name}</td>
-                      <td>{app.email}</td>
-                      <td>{app.phone}</td>
-                      <td>{app.address}</td>
-                      <td>{app.loanAmount}</td>
-                      <td>{app.loanType}</td>
-                      <td>{app.loanPurpose}</td>
-                      <td>
+                      <td data-label="Name">{app.name}</td>
+                      <td data-label="Email">{app.email}</td>
+                      <td data-label="Phone">{app.phone}</td>
+                      <td data-label="Address">{app.address}</td>
+                      <td data-label="Loan Amount">{app.loanAmount}</td>
+                      <td data-label="Loan Type">{app.loanType}</td>
+                      <td data-label="Loan Purpose">{app.loanPurpose}</td>
+                      <td data-label="Status">
                         <span
                           className={`badge ${
                             app.status === 'Approved'
@@ -92,12 +92,14 @@ function LoanApprovalPage() {
 
       {/* Custom CSS */}
       <style jsx>{`
+        .table-responsive {
+          width: 100%;
+          overflow-x: auto;
+        }
+
         @media (max-width: 768px) {
           h1 {
             font-size: 1.5rem;
-          }
-          .table-responsive {
-            overflow-x: auto;
           }
         }
 
@@ -107,6 +109,33 @@ function LoanApprovalPage() {
           }
           .m-5 {
             margin: 1rem !important;
+          }
+
+          /* Make table rows act like cards on small screens */
+          .table-striped tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+            border-radius: 10px;
+          }
+
+          .table-striped tbody td {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+          }
+
+          .table-striped tbody td:before {
+            content: attr(data-label);
+            font-weight: bold;
+            flex-basis: 40%;
+            text-align: left;
+          }
+
+          /* Hide table headers on mobile */
+          .table-striped thead {
+            display: none;
           }
         }
       `}</style>
