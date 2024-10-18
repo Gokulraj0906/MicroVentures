@@ -8,7 +8,8 @@ function EventHostingPage() {
     eventName: '',
     eventDate: '',
     eventLocation: '',
-    eventDescription: ''
+    eventDescription: '',
+    eventRegistrationDetails:''
   });
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -49,20 +50,25 @@ function EventHostingPage() {
           <form onSubmit={handleSubmit}>
             <MDBRow className="mb-4">
               <MDBCol md='12'>
-                <MDBInput label='Event Name' id='eventName' type='text' value={eventDetails.eventName} onChange={handleChange} />
+                <MDBInput label='Event Name' id='eventName' type='text' value={eventDetails.eventName} onChange={handleChange} required />
               </MDBCol>
             </MDBRow>
             <MDBRow className="mb-4">
               <MDBCol md='6'>
-                <MDBInput label='Event Date' id='eventDate' type='date' value={eventDetails.eventDate} onChange={handleChange} />
+                <MDBInput label='Event Date' id='eventDate' type='date' value={eventDetails.eventDate} onChange={handleChange} required />
               </MDBCol>
               <MDBCol md='6'>
-                <MDBInput label='Event Location' id='eventLocation' type='text' value={eventDetails.eventLocation} onChange={handleChange} />
+                <MDBInput label='Event Location' id='eventLocation' type='text' value={eventDetails.eventLocation} onChange={handleChange} required />
               </MDBCol>
             </MDBRow>
             <MDBRow className="mb-4">
               <MDBCol md='12'>
-                <MDBInput label='Event Description' id='eventDescription' type='textarea' value={eventDetails.eventDescription} onChange={handleChange} />
+                <MDBInput label='Event Description and Links' id='eventDescription' type='textarea' value={eventDetails.eventDescription} onChange={handleChange} required />
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md='16'>
+                <MDBInput label='Event Registeration Link' id ='eventRegistrationDetails' type='url' value={eventDetails.eventRegistrationDetails} onChange={handleChange} required />
               </MDBCol>
             </MDBRow>
             <MDBBtn className='mt-4' size='lg' type="submit">Submit</MDBBtn>
@@ -73,5 +79,4 @@ function EventHostingPage() {
     </>
   );
 }
-
 export default EventHostingPage;

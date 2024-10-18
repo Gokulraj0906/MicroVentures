@@ -1,7 +1,7 @@
 // firebase.js
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -24,9 +24,9 @@ const firebaseConfig = {
 //   console.log(`Admin privileges granted to ${email}`);
 // }
 
-// setAdmin('gokulraj.ds.ai@gmail.com');
-// Initialize Firebase
+// setAdmin('gokulsenthil0906@gmail.com');
+// // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);

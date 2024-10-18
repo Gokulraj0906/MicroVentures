@@ -11,9 +11,8 @@ import {
   MDBIcon,
   MDBCheckbox
 } from 'mdb-react-ui-kit';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-// import { auth, db } from '../Firebase';
 import { db, auth } from '../Firebase';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -24,6 +23,7 @@ function App() {
   const [pass2, setPass2] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -45,18 +45,27 @@ function App() {
       const user = userCredential.user;
 
       if (user) {
+        // Store user details in Firestore
         await setDoc(doc(db, "users", user.uid), {
           UserName: uname,
           Emailid: uemail,
         });
 
+        // Send email verification
+        await sendEmailVerification(user);
+        setSuccessMessage("Signup successful! Please check your email for verification.");
+
+        // Clear form inputs
         setIsSubmitted(true);
         setUname('');
         setEmail('');
         setPass1('');
         setPass2('');
-        setError("Signup successful!");
-        navigate('/home')
+
+        // Redirect to login page after some time
+        setTimeout(() => {
+          navigate('/');
+        }, 5000);
       }
 
     } catch (error) {
@@ -84,11 +93,12 @@ function App() {
         <MDBCard className='text-black m-5' style={{ borderRadius: '25px', maxWidth: '1000px' }}>
           <form onSubmit={handleSubmit}>
             <MDBCardBody>
-              <MDBRow className="d-flex justify-content-center align-items-center">
+              <MDBRow className="d-flex justify-content-center align-items-center"> 
                 <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
                   <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                   {error && <p className="text-danger">{error}</p>}
+                  {successMessage && <p className="text-success">{successMessage}</p>}
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <MDBIcon fas icon="user me-3" size='lg' />

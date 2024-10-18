@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { mailOutline, lockClosedOutline, eyeOffOutline, eyeOutline } from 'ionicons/icons';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider,sendPasswordResetEmail } from 'firebase/auth';
 import './Login.scss';
+import { auth } from '../Firebase'; // Reuse imported auth
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -20,18 +21,37 @@ function Login() {
     }
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    const auth = getAuth();
+
+  const signInWithGoogle = async (e) => {
+    e.preventDefault(); // Prevent page reload
     try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      // alert('Login successful!');
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
       navigate('/home');
+      const user = result.user;
+      console.log(user);
     } catch (error) {
-      console.error('Error signing in: ', error);
-      alert('Error signing in. Please check your credentials.');
+      console.error("Error signing in with Google:", error);
     }
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+      const user = userCredential.user;
+      if (!user.emailVerified) {
+        alert('Please verify your email before logging in.');
+        return;
+      }
+      // If successful, navigate to the home page
+      navigate('/home');
+    } catch (error) {
+      // Show error message in a popup
+      alert('Username Or Password Is Invalid correct it');
+    }
+  };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -81,10 +101,10 @@ function Login() {
           </div>
 
           <button type="submit" className="login">Login</button>
-
           <div className="footer">
+          {/* <button onClick={signInWithGoogle} className="login">Sign in with Google</button> */}
             <span><a id='a' href="/signup">Sign up</a></span>
-            <span>Forgot Password?</span>
+            <span><a id='a' href="/forget-password">Forgot Password?</a></span>
           </div>
         </form>
       </div>
