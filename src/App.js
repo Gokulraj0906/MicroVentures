@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './Components/Home';
 import LoanApplicationForm from './Components/LoanApplication';
@@ -13,6 +13,7 @@ import ForgotPassword from './Components/Forgetpass';
 import { AuthProvider, useAuth } from './Contexts/AuthContext';
 import { MDBContainer } from 'mdb-react-ui-kit';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { auth } from './Firebase';
 
 
 function PrivateRoute({ children }) {
@@ -46,9 +47,21 @@ class ErrorBoundary extends React.Component {
 
     return this.props.children;
   }
+  
 }
 
 function App() {
+  const [firebaseReady, setFirebaseReady] = useState(false);
+
+  useEffect(() => {
+    if (auth) {
+      setFirebaseReady(true); // Firebase has been initialized
+    }
+  }, []);
+
+  if (!firebaseReady) {
+    return <div>Loading Firebase...</div>;
+  }
   return (
     <AuthProvider>
       <ErrorBoundary>

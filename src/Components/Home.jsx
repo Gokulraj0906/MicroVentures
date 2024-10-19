@@ -20,7 +20,6 @@ const HomePage = () => {
 
     const fetchNews = async () => {
       const params = {
-        // api_token: '5acjg8u0adYLaK96JXFOkHpE8UV2YtGZdV99jzYC',
         api_token:process.env.REACT_APP_NEWS_API_TOKEN,
         categories: 'business',
       };
