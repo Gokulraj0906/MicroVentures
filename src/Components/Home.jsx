@@ -17,13 +17,11 @@ const HomePage = () => {
         console.error('Error fetching events: ', error);
       }
     };
-
     const fetchNews = async () => {
       const params = {
         api_token:process.env.REACT_APP_NEWS_API_TOKEN,
         categories: 'business',
       };
-
       const esc = encodeURIComponent;
       const query = Object.keys(params)
         .map(k => `${esc(k)}=${esc(params[k])}`)
