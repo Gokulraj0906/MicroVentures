@@ -3,7 +3,6 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCa
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../Firebase';
 import MyNavbar from './Navbar';
-
 const HomePage = () => {
   const [events, setEvents] = useState([]);
   const [news, setNews] = useState([]);
@@ -21,7 +20,8 @@ const HomePage = () => {
 
     const fetchNews = async () => {
       const params = {
-        api_token: '5acjg8u0adYLaK96JXFOkHpE8UV2YtGZdV99jzYC',
+        // api_token: '5acjg8u0adYLaK96JXFOkHpE8UV2YtGZdV99jzYC',
+        api_token:process.env.REACT_APP_NEWS_API_TOKEN,
         categories: 'business',
       };
 
