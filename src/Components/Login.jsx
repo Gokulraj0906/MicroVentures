@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { mailOutline, lockClosedOutline, eyeOffOutline, eyeOutline } from 'ionicons/icons';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword,sendEmailVerification } from 'firebase/auth';
 import './Login.scss';
 import { auth } from '../Firebase'; // Reuse imported auth
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,8 @@ function Login() {
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
       const user = userCredential.user;
       if (!user.emailVerified) {
-        alert('Please verify your email before logging in.');
+        alert(`Please verify your email before logging in. Verification link sent to ${email}`);
+        await sendEmailVerification(user);
         return;
       }
       // If successful, navigate to the home page
